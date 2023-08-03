@@ -1,1 +1,1 @@
-# etch-a-sketch
+Intermediate javascript project using css styling, arrays, and DOM manipulation.
