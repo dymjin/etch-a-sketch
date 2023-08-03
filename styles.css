@@ -1,0 +1,17 @@
+html, body {
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.grid-container {
+    display: flex;
+    flex-wrap: wrap;
+    width: 500px;
+    height: 500px;
+}
+
+.grid-box {
+    background-color: aquamarine;
+    width: 25px;
+    height: 25px;
+}
