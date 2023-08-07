@@ -2,12 +2,20 @@ const gridContainer = document.querySelector('.grid-container');
 const body = document.querySelector('body');
 let draw = false;
 let boxes = [];
+let r = 0;
+let g = 0;
+let b = 0;
 const newGridBtn = document.createElement('button');
 newGridBtn.textContent = 'New Grid';
 newGridBtn.setAttribute('class', 'new-grid');
 body.insertBefore(newGridBtn, gridContainer);
 
-let newGrid = (size) => {
+const rainbowGridBtn = document.createElement('button');
+rainbowGridBtn.textContent = 'New Rainbow Grid';
+rainbowGridBtn.setAttribute('class', 'new-grid');
+body.insertBefore(rainbowGridBtn, gridContainer);
+
+let newGrid = (size, color) => {
     let i = 0;
     const boxSize = gridContainer.clientHeight / size;
     while (i < (Math.pow(size, 2))) {
@@ -24,8 +32,13 @@ let newGrid = (size) => {
             }
         });
         div.addEventListener('mouseover', () => {
-            if (draw === true) {
-                div.style.backgroundColor = 'black';
+            if (draw === true && color !== 'rainbow') {
+                div.style.backgroundColor = `${color}`;
+            } else if (draw === true && color === 'rainbow') {
+                r = Math.random() * 255;
+                g = Math.random() * 255;
+                b = Math.random() * 255;
+                div.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
             }
         });
         i++;
@@ -37,7 +50,15 @@ newGridBtn.addEventListener('click', () => {
         gridContainer.removeChild(gridContainer.firstChild);
     }
     const gridSize = Number(window.prompt('Enter a number', ''));
-    newGrid(gridSize);
+    newGrid(gridSize, 'black');
 });
 
-newGrid(10);
+rainbowGridBtn.addEventListener('click', () => {
+    while (gridContainer.firstChild) {
+        gridContainer.removeChild(gridContainer.firstChild);
+    }
+    const gridSize = Number(window.prompt('Enter a number', ''));
+    newGrid(gridSize, 'rainbow');
+});
+
+newGrid(10, 'black');
