@@ -9,8 +9,17 @@ while (i < (Math.pow(gridSize, 2))) {
     div.setAttribute('class', 'grid-box');
     div.setAttribute('style', `width: ${boxSize}px; height: ${boxSize}px`);
     gridContainer.appendChild(div);
+    div.addEventListener('click', () => {
+        if (draw === true) {
+            draw = false;
+        } else {
+            draw = true;
+        }
+    });
     div.addEventListener('mouseover', () => {
-        div.style.backgroundColor = 'black';
+        if (draw === true) {
+            div.style.backgroundColor = 'black';
+        }
     });
     i++;
 }

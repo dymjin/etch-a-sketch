@@ -1,9 +1,12 @@
-html, body {
+html,
+body {
     height: 100%;
     box-sizing: border-box;
+    margin: 0;
 }
 
 .grid-container {
+    margin: 10px 0 0 10px;
     display: flex;
     flex-wrap: wrap;
     /* align-content: start; */
@@ -18,4 +21,8 @@ html, body {
 
 .grid-black {
     background-color: rgb(0, 0, 0);
+}
+
+.new-grid {
+    margin: 10px 0 10px 10px;
 }
