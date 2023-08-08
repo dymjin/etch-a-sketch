@@ -49,16 +49,23 @@ newGridBtn.addEventListener('click', () => {
     while (gridContainer.firstChild) {
         gridContainer.removeChild(gridContainer.firstChild);
     }
-    const gridSize = Number(window.prompt('Enter a number', ''));
-    newGrid(gridSize, 'black');
+    let gridSize = Number(window.prompt('Enter a number', ''));
+    console.log(gridSize);
+    if (gridSize === 0) {
+        gridSize = 10;
+    }
+    newGrid(gridSize, 'white');
 });
 
 rainbowGridBtn.addEventListener('click', () => {
     while (gridContainer.firstChild) {
         gridContainer.removeChild(gridContainer.firstChild);
     }
-    const gridSize = Number(window.prompt('Enter a number', ''));
+    let gridSize = Number(window.prompt('Enter a number', ''));
+    if (gridSize === 0) {
+        gridSize = 10;
+    }
     newGrid(gridSize, 'rainbow');
 });
 
-newGrid(10, 'black');
+newGrid(10, 'white');
