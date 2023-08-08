@@ -1,7 +1,6 @@
 const gridContainer = document.querySelector('.grid-container');
 const body = document.querySelector('body');
 let draw = false;
-let boxes = [];
 let r = 0;
 let g = 0;
 let b = 0;
@@ -15,6 +14,11 @@ rainbowGridBtn.textContent = 'New Rainbow Grid';
 rainbowGridBtn.setAttribute('class', 'new-grid');
 body.insertBefore(rainbowGridBtn, gridContainer);
 
+const clearCanvasBtn = document.createElement('button');
+clearCanvasBtn.textContent = 'Clear canvas';
+clearCanvasBtn.setAttribute('class', 'new-grid');
+body.insertBefore(clearCanvasBtn, gridContainer);
+
 let newGrid = (size, color) => {
     let i = 0;
     const boxSize = gridContainer.clientHeight / size;
@@ -23,7 +27,6 @@ let newGrid = (size, color) => {
         div.setAttribute('class', 'grid-box');
         div.setAttribute('style', `width: ${boxSize}px; height: ${boxSize}px`);
         gridContainer.appendChild(div);
-        boxes.push(div);
         div.addEventListener('click', () => {
             if (draw === true) {
                 draw = false;
@@ -50,7 +53,6 @@ newGridBtn.addEventListener('click', () => {
         gridContainer.removeChild(gridContainer.firstChild);
     }
     let gridSize = Number(window.prompt('Enter a number', ''));
-    console.log(gridSize);
     if (gridSize === 0) {
         gridSize = 10;
     }
@@ -66,6 +68,11 @@ rainbowGridBtn.addEventListener('click', () => {
         gridSize = 10;
     }
     newGrid(gridSize, 'rainbow');
+});
+
+clearCanvasBtn.addEventListener('click', () => {
+    const divList = document.querySelectorAll('.grid-box');
+    divList.forEach(div => div.style.backgroundColor = 'black');
 });
 
 newGrid(10, 'white');
