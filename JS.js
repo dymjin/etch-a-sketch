@@ -1,82 +1,73 @@
 const gridContainer = document.querySelector('.grid-container');
-const body = document.querySelector('body');
 const btnsContainer = document.querySelector('.buttons-container');
-let draw = false;
-let r = 0;
-let g = 0;
-let b = 0;
-const newGridBtn = document.createElement('button');
-newGridBtn.textContent = 'New Grid';
-newGridBtn.setAttribute('class', 'new-grid');
-btnsContainer.appendChild(newGridBtn);
+const colorPicker = document.getElementById('color-picker');
+const inputNum = document.getElementById('input-num');
 
-const rainbowGridBtn = document.createElement('button');
-rainbowGridBtn.textContent = 'New Rainbow Grid';
-rainbowGridBtn.setAttribute('class', 'new-grid');
-btnsContainer.appendChild(rainbowGridBtn);
+const rainbowBtn = document.createElement('button');
+rainbowBtn.textContent = 'Toggle Rainbow Brush';
+rainbowBtn.setAttribute('class', 'new-grid');
+btnsContainer.appendChild(rainbowBtn);
 
 const clearCanvas = document.createElement('button');
 clearCanvas.textContent = 'Clear canvas';
 clearCanvas.setAttribute('class', 'new-grid');
 btnsContainer.appendChild(clearCanvas);
 
-let newGrid = (size, color) => {
+let bgColor = 'black';
+let draw = false;
+let brush = 'default';
+let r = 0;
+let g = 0;
+let b = 0;
+
+let newGrid = (size) => {
     let i = 0;
     const boxSize = (gridContainer.clientHeight * 10 / (size * 10));
-    console.log(boxSize);
-
     while (i < (Math.pow(size, 2))) {
         const div = document.createElement('div');
         div.setAttribute('class', 'grid-box');
         div.setAttribute('style', `width: ${boxSize}px; height: ${boxSize}px`);
+        div.style.opacity = 1;
         gridContainer.appendChild(div);
-        div.addEventListener('click', () => {
-            if (draw === true) {
-                draw = false;
-            } else {
-                draw = true;
-            }
-        });
-        div.addEventListener('mouseover', () => {
-            if (draw === true && color !== 'rainbow') {
-                div.style.backgroundColor = `${color}`;
-            } else if (draw === true && color === 'rainbow') {
-                r = Math.random() * 255;
-                g = Math.random() * 255;
-                b = Math.random() * 255;
-                div.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
-            }
-        });
         i++;
     }
 }
+newGrid(10);
+const divList = document.querySelectorAll('.grid-box');
 
-newGridBtn.addEventListener('click', () => {
-    while (gridContainer.firstChild) {
-        gridContainer.removeChild(gridContainer.firstChild);
+divList.forEach(div => div.addEventListener('click', () => {
+    if (draw === true) {
+        draw = false;
+    } else {
+        draw = true;
     }
-    let gridSize = Number(window.prompt('Enter a number', ''));
-    if (gridSize === 0) {
-        gridSize = 10;
+}));
+
+divList.forEach(div => div.addEventListener('mouseover', () => {
+    if (draw === true && brush === 'default') {
+        div.style.backgroundColor = bgColor;
+    } else if (draw === true && brush === 'rainbow') {
+        r = Math.random() * 255;
+        g = Math.random() * 255;
+        b = Math.random() * 255;
+        div.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
     }
-    newGrid(gridSize, 'white');
+}));
+
+colorPicker.addEventListener('input', () => {
+    bgColor = `${colorPicker.value}`;
+    brush = 'default';
 });
 
-rainbowGridBtn.addEventListener('click', () => {
-    while (gridContainer.firstChild) {
-        gridContainer.removeChild(gridContainer.firstChild);
-    }
-    let gridSize = Number(window.prompt('Enter a number', ''));
-    if (gridSize === 0) {
-        gridSize = 10;
-    }
-    newGrid(gridSize, 'rainbow');
+rainbowBtn.addEventListener('click', () => {
+    brush = 'rainbow';
 });
 
 clearCanvas.addEventListener('click', () => {
     draw = false;
-    const divList = document.querySelectorAll('.grid-box');
-    divList.forEach(div => div.style.backgroundColor = 'black');
+    brush = 'default';
+    divList.forEach(div => {
+        div.style.backgroundColor = 'white';
+        div.style.opacity = 1;
+    });
 });
-
-newGrid(10, 'white');
