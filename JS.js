@@ -1,5 +1,6 @@
 const gridContainer = document.querySelector('.grid-container');
 const body = document.querySelector('body');
+const btnsContainer = document.querySelector('.buttons-container');
 let draw = false;
 let r = 0;
 let g = 0;
@@ -7,21 +8,23 @@ let b = 0;
 const newGridBtn = document.createElement('button');
 newGridBtn.textContent = 'New Grid';
 newGridBtn.setAttribute('class', 'new-grid');
-body.insertBefore(newGridBtn, gridContainer);
+btnsContainer.appendChild(newGridBtn);
 
 const rainbowGridBtn = document.createElement('button');
 rainbowGridBtn.textContent = 'New Rainbow Grid';
 rainbowGridBtn.setAttribute('class', 'new-grid');
-body.insertBefore(rainbowGridBtn, gridContainer);
+btnsContainer.appendChild(rainbowGridBtn);
 
-const clearCanvasBtn = document.createElement('button');
-clearCanvasBtn.textContent = 'Clear canvas';
-clearCanvasBtn.setAttribute('class', 'new-grid');
-body.insertBefore(clearCanvasBtn, gridContainer);
+const clearCanvas = document.createElement('button');
+clearCanvas.textContent = 'Clear canvas';
+clearCanvas.setAttribute('class', 'new-grid');
+btnsContainer.appendChild(clearCanvas);
 
 let newGrid = (size, color) => {
     let i = 0;
-    const boxSize = gridContainer.clientHeight / size;
+    const boxSize = (gridContainer.clientHeight * 10 / (size * 10));
+    console.log(boxSize);
+
     while (i < (Math.pow(size, 2))) {
         const div = document.createElement('div');
         div.setAttribute('class', 'grid-box');
@@ -70,7 +73,8 @@ rainbowGridBtn.addEventListener('click', () => {
     newGrid(gridSize, 'rainbow');
 });
 
-clearCanvasBtn.addEventListener('click', () => {
+clearCanvas.addEventListener('click', () => {
+    draw = false;
     const divList = document.querySelectorAll('.grid-box');
     divList.forEach(div => div.style.backgroundColor = 'black');
 });
