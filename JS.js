@@ -28,12 +28,13 @@ let newGrid = (size) => {
         div.setAttribute('class', 'grid-box');
         div.setAttribute('style', `width: ${boxSize}px; height: ${boxSize}px`);
         div.style.opacity = 1;
+        div.style.backgroundColor = 'white';
         gridContainer.appendChild(div);
         i++;
     }
 }
 newGrid(10);
-const divList = document.querySelectorAll('.grid-box');
+let divList = document.querySelectorAll('.grid-box');
 
 divList.forEach(div => div.addEventListener('click', () => {
     if (draw === true) {
@@ -59,6 +60,32 @@ colorPicker.addEventListener('input', () => {
     brush = 'default';
 });
 
+inputNum.addEventListener('input', () => {
+    while (gridContainer.firstChild) {
+        gridContainer.removeChild(gridContainer.firstChild);
+    }
+    newGrid(inputNum.value);
+    let divList = document.querySelectorAll('.grid-box');
+    divList.forEach(div => div.addEventListener('click', () => {
+        if (draw === true) {
+            draw = false;
+        } else {
+            draw = true;
+        }
+    }));
+
+    divList.forEach(div => div.addEventListener('mouseover', () => {
+        if (draw === true && brush === 'default') {
+            div.style.backgroundColor = bgColor;
+        } else if (draw === true && brush === 'rainbow') {
+            r = Math.random() * 255;
+            g = Math.random() * 255;
+            b = Math.random() * 255;
+            div.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
+        }
+    }));
+});
+
 rainbowBtn.addEventListener('click', () => {
     brush = 'rainbow';
 });
@@ -66,6 +93,7 @@ rainbowBtn.addEventListener('click', () => {
 clearCanvas.addEventListener('click', () => {
     draw = false;
     brush = 'default';
+    divList = document.querySelectorAll('.grid-box');
     divList.forEach(div => {
         div.style.backgroundColor = 'white';
         div.style.opacity = 1;
