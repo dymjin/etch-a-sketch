@@ -8,6 +8,11 @@ rainbowBtn.textContent = 'Toggle Rainbow Brush';
 rainbowBtn.setAttribute('class', 'new-grid');
 btnsContainer.appendChild(rainbowBtn);
 
+const darkenBtn = document.createElement('button');
+darkenBtn.textContent = 'Toggle Darken Brush';
+darkenBtn.setAttribute('class', 'new-grid');
+btnsContainer.appendChild(darkenBtn);
+
 const clearCanvas = document.createElement('button');
 clearCanvas.textContent = 'Clear canvas';
 clearCanvas.setAttribute('class', 'new-grid');
@@ -45,13 +50,17 @@ divList.forEach(div => div.addEventListener('click', () => {
 }));
 
 divList.forEach(div => div.addEventListener('mouseover', () => {
+    divStyles = getComputedStyle(div);
     if (draw === true && brush === 'default') {
         div.style.backgroundColor = bgColor;
+        div.style.opacity = 1;
     } else if (draw === true && brush === 'rainbow') {
         r = Math.random() * 255;
         g = Math.random() * 255;
         b = Math.random() * 255;
         div.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
+    } else if (draw === true && brush === 'darken') {
+        div.style.opacity = (divStyles.opacity * 10 - 0.1 * 10) / 10;
     }
 }));
 
@@ -75,19 +84,37 @@ inputNum.addEventListener('input', () => {
     }));
 
     divList.forEach(div => div.addEventListener('mouseover', () => {
+        divStyles = getComputedStyle(div);
         if (draw === true && brush === 'default') {
             div.style.backgroundColor = bgColor;
+            div.style.opacity = 1;
         } else if (draw === true && brush === 'rainbow') {
             r = Math.random() * 255;
             g = Math.random() * 255;
             b = Math.random() * 255;
             div.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
+        } else if (draw === true && brush === 'darken') {
+            div.style.opacity = (divStyles.opacity * 10 - 0.1 * 10) / 10;
         }
     }));
 });
 
 rainbowBtn.addEventListener('click', () => {
-    brush = 'rainbow';
+    draw = false;
+    if (brush === "rainbow") {
+        brush = "default";
+    } else {
+        brush = 'rainbow';
+    }
+});
+
+darkenBtn.addEventListener('click', () => {
+    draw = false;
+    if (brush === "darken") {
+        brush = "default";
+    } else {
+        brush = 'darken';
+    }
 });
 
 clearCanvas.addEventListener('click', () => {
